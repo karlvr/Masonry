@@ -63,6 +63,8 @@
 - (MASConstraint * (^)(void))inactive {
     return ^id{
         self.dontInstallImmediately = YES;
+        /* In case the constraint has already been installed */
+        [self uninstall];
         return self;
     };
 }
