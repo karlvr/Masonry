@@ -30,6 +30,25 @@
     return self;
 }
 
+#pragma mark - Public
+
+- (BOOL)isActive {
+    for (MASConstraint *constraint in _childConstraints) {
+        if (!constraint.isActive) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (void)setActive:(BOOL)active {
+    if (active) {
+        [self activate];
+    } else {
+        [self deactivate];
+    }
+}
+
 #pragma mark - MASConstraintDelegate
 
 - (void)constraint:(MASConstraint *)constraint shouldBeReplacedWithConstraint:(MASConstraint *)replacementConstraint {

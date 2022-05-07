@@ -81,6 +81,26 @@ static char kInstalledConstraintsKey;
     return [view.mas_installedConstraints allObjects];
 }
 
+- (BOOL)isActive {
+    if (self.layoutConstraint != nil) {
+        if ([self supportsActiveProperty]) {
+            return [self.layoutConstraint isActive];
+        } else {
+            return YES;
+        }
+    } else {
+        return NO;
+    }
+}
+
+- (void)setActive:(BOOL)active {
+    if (active) {
+        [self activate];
+    } else {
+        [self deactivate];
+    }
+}
+
 #pragma mark - Private
 
 - (void)setLayoutConstant:(CGFloat)layoutConstant {
@@ -104,15 +124,6 @@ static char kInstalledConstraintsKey;
 
 - (BOOL)supportsActiveProperty {
     return [self.layoutConstraint respondsToSelector:@selector(isActive)];
-}
-
-- (BOOL)isActive {
-    BOOL active = YES;
-    if ([self supportsActiveProperty]) {
-        active = [self.layoutConstraint isActive];
-    }
-
-    return active;
 }
 
 - (BOOL)hasBeenInstalled {
@@ -390,6 +401,10 @@ static char kInstalledConstraintsKey;
 }
 
 - (void)uninstall {
+    if (!self.hasBeenInstalled) {
+        return;
+    }
+
     if ([self supportsActiveProperty]) {
         self.layoutConstraint.active = NO;
         [self.firstViewAttribute.view.mas_installedConstraints removeObject:self];

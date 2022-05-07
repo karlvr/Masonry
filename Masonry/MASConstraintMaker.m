@@ -42,7 +42,9 @@
     NSArray *constraints = self.constraints.copy;
     for (MASConstraint *constraint in constraints) {
         constraint.updateExisting = self.updateExisting;
-        [constraint install];
+        if (!constraint.dontInstallImmediately) {
+            [constraint install];
+        }
     }
     [self.constraints removeAllObjects];
     return constraints;

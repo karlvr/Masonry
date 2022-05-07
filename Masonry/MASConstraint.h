@@ -110,6 +110,11 @@
 - (MASConstraint * (^)(id attr))lessThanOrEqualTo;
 
 /**
+ *  Don't install this constraint initially.
+ */
+- (MASConstraint * (^)(void))inactive;
+
+/**
  *	Optional semantic property which has no effect but improves the readability of constraint
  */
 - (MASConstraint *)with;
@@ -201,6 +206,9 @@
  */
 @property (nonatomic, copy, readonly) MASConstraint *animator;
 #endif
+
+- (BOOL)isActive;
+- (void)setActive:(BOOL)active;
 
 /**
  *  Activates an NSLayoutConstraint if it's supported by an OS. 

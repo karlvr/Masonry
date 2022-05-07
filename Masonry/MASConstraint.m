@@ -60,6 +60,13 @@
     };
 }
 
+- (MASConstraint * (^)(void))inactive {
+    return ^id{
+        self.dontInstallImmediately = YES;
+        return self;
+    };
+}
+
 #pragma mark - MASLayoutPriority proxies
 
 - (MASConstraint * (^)(void))priorityLow {
@@ -285,6 +292,10 @@
 - (MASConstraint *)animator { MASMethodNotImplemented(); }
 
 #endif
+
+- (BOOL)isActive { MASMethodNotImplemented(); return YES; }
+
+- (void)setActive:(BOOL)active { MASMethodNotImplemented(); }
 
 - (void)activate { MASMethodNotImplemented(); }
 

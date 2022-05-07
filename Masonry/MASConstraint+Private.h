@@ -24,6 +24,11 @@
 @property (nonatomic, weak) id<MASConstraintDelegate> delegate;
 
 /**
+ *  Whether to install this constraint when it is created.
+ */
+@property (nonatomic, assign) BOOL dontInstallImmediately;
+
+/**
  *  Based on a provided value type, is equal to calling:
  *  NSNumber - setOffset:
  *  NSValue with CGPoint - setPointOffset:
