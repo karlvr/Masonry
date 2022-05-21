@@ -136,6 +136,20 @@
     };
 }
 
+- (MASConstraint * (^)(CGFloat))offsetIn {
+    return ^id(CGFloat offsetIn){
+        self.offsetIn = offsetIn;
+        return self;
+    };
+}
+
+- (MASConstraint * (^)(CGFloat))offsetOut {
+    return ^id(CGFloat offsetOut){
+        self.offsetOut = offsetOut;
+        return self;
+    };
+}
+
 - (MASConstraint * (^)(NSValue *value))valueOffset {
     return ^id(NSValue *offset) {
         NSAssert([offset isKindOfClass:NSValue.class], @"expected an NSValue offset, got: %@", offset);
@@ -298,6 +312,10 @@
 
 - (void)setOffsetMultiplier:(CGFloat __unused)offsetMultiplier { MASMethodNotImplemented(); }
 
+- (void)setOffsetIn:(CGFloat __unused)offsetIn { MASMethodNotImplemented(); }
+
+- (void)setOffsetOut:(CGFloat __unused)offsetOut { MASMethodNotImplemented(); }
+
 #if TARGET_OS_MAC && !(TARGET_OS_IPHONE || TARGET_OS_TV)
 
 - (MASConstraint *)animator { MASMethodNotImplemented(); }
@@ -309,6 +327,10 @@
 - (void)setActive:(BOOL)active { MASMethodNotImplemented(); }
 
 - (void)activate { MASMethodNotImplemented(); }
+
+- (void)activateIn { MASMethodNotImplemented(); }
+
+- (void)activateOut { MASMethodNotImplemented(); }
 
 - (void)deactivate { MASMethodNotImplemented(); }
 

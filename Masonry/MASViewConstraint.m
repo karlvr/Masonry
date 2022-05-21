@@ -45,6 +45,10 @@ static char kInstalledConstraintsKey;
 @property (nonatomic, assign) CGFloat layoutMultiplier;
 @property (nonatomic, assign) CGFloat layoutConstant;
 @property (nonatomic, assign) CGFloat layoutConstantMultiplier;
+@property (nonatomic, assign) CGFloat layoutConstantIn;
+@property (nonatomic, assign) CGFloat layoutConstantOut;
+@property (nonatomic, assign) BOOL layoutConstantInSet;
+@property (nonatomic, assign) BOOL layoutConstantOutSet;
 @property (nonatomic, assign) BOOL hasLayoutRelation;
 @property (nonatomic, strong) id mas_key;
 @property (nonatomic, assign) BOOL useAnimator;
@@ -278,11 +282,25 @@ static char kInstalledConstraintsKey;
 
 - (void)setOffset:(CGFloat)offset {
     self.layoutConstant = offset;
+    if (self.layoutConstraint == nil && !self.layoutConstantInSet) {
+        /* If this constraint hasn't been set yet, and we don't have an offsetIn, set it */
+        self.offsetIn = offset;
+    }
 }
 
 - (void)setOffsetMultiplier:(CGFloat)offsetMultiplier {
     self.layoutConstantMultiplier = offsetMultiplier;
     self.layoutConstant = self.layoutConstant;
+}
+
+- (void)setOffsetIn:(CGFloat)offsetIn {
+    self.layoutConstantIn = offsetIn;
+    self.layoutConstantInSet = YES;
+}
+
+- (void)setOffsetOut:(CGFloat)offsetOut {
+    self.layoutConstantOut = offsetOut;
+    self.layoutConstantOutSet = YES;
 }
 
 - (void)setSizeOffset:(CGSize)sizeOffset {
@@ -317,6 +335,18 @@ static char kInstalledConstraintsKey;
 
 - (void)activate {
     [self install];
+}
+
+- (void)activateIn {
+    if (self.layoutConstantInSet) {
+        self.layoutConstant = self.layoutConstantIn;
+    }
+}
+
+- (void)activateOut {
+    if (self.layoutConstantOutSet) {
+        self.layoutConstant = self.layoutConstantOut;
+    }
 }
 
 - (void)deactivate {

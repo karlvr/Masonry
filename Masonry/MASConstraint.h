@@ -52,6 +52,10 @@
 
 - (MASConstraint * (^)(CGFloat offsetMultiplier))offsetMultiplier;
 
+- (MASConstraint * (^)(CGFloat offsetIn))offsetIn;
+
+- (MASConstraint * (^)(CGFloat offsetOut))offsetOut;
+
 /**
  *  Modifies the NSLayoutConstraint constant based on a value type
  */
@@ -219,6 +223,9 @@
  *  Invokes install otherwise.
  */
 - (void)activate;
+
+- (void)activateIn;
+- (void)activateOut;
 
 /**
  *  Deactivates previously installed/activated NSLayoutConstraint.

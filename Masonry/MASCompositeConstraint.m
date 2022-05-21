@@ -180,6 +180,18 @@
     }
 }
 
+- (void)activateIn {
+    for (MASConstraint *constraint in self.childConstraints) {
+        [constraint activateIn];
+    }
+}
+
+- (void)activateOut {
+    for (MASConstraint *constraint in self.childConstraints) {
+        [constraint activateOut];
+    }
+}
+
 - (void)deactivate {
     for (MASConstraint *constraint in self.childConstraints) {
         [constraint deactivate];
