@@ -44,6 +44,7 @@ static char kInstalledConstraintsKey;
 @property (nonatomic, assign) MASLayoutPriority layoutPriority;
 @property (nonatomic, assign) CGFloat layoutMultiplier;
 @property (nonatomic, assign) CGFloat layoutConstant;
+@property (nonatomic, assign) CGFloat layoutConstantMultiplier;
 @property (nonatomic, assign) BOOL hasLayoutRelation;
 @property (nonatomic, strong) id mas_key;
 @property (nonatomic, assign) BOOL useAnimator;
@@ -59,6 +60,7 @@ static char kInstalledConstraintsKey;
     _firstViewAttribute = firstViewAttribute;
     self.layoutPriority = MASLayoutPriorityRequired;
     self.layoutMultiplier = 1;
+    self.layoutConstantMultiplier = 1;
     
     return self;
 }
@@ -108,12 +110,12 @@ static char kInstalledConstraintsKey;
 
 #if TARGET_OS_MAC && !(TARGET_OS_IPHONE || TARGET_OS_TV)
     if (self.useAnimator) {
-        [self.layoutConstraint.animator setConstant:layoutConstant];
+        [self.layoutConstraint.animator setConstant:layoutConstant * _layoutConstantMultiplier];
     } else {
-        self.layoutConstraint.constant = layoutConstant;
+        self.layoutConstraint.constant = layoutConstant * _layoutConstantMultiplier;
     }
 #else
-    self.layoutConstraint.constant = layoutConstant;
+    self.layoutConstraint.constant = layoutConstant * _layoutConstantMultiplier;
 #endif
 }
 
@@ -278,6 +280,11 @@ static char kInstalledConstraintsKey;
     self.layoutConstant = offset;
 }
 
+- (void)setOffsetMultiplier:(CGFloat)offsetMultiplier {
+    self.layoutConstantMultiplier = offsetMultiplier;
+    self.layoutConstant = self.layoutConstant;
+}
+
 - (void)setSizeOffset:(CGSize)sizeOffset {
     NSLayoutAttribute layoutAttribute = self.firstViewAttribute.layoutAttribute;
     switch (layoutAttribute) {
@@ -347,7 +354,7 @@ static char kInstalledConstraintsKey;
                                            toItem:secondLayoutItem
                                         attribute:secondLayoutAttribute
                                        multiplier:self.layoutMultiplier
-                                         constant:self.layoutConstant];
+                                         constant:self.layoutConstant * self.layoutConstantMultiplier];
     
     layoutConstraint.priority = self.layoutPriority;
     layoutConstraint.mas_key = self.mas_key;

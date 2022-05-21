@@ -50,6 +50,8 @@
  */
 - (MASConstraint * (^)(CGFloat offset))offset;
 
+- (MASConstraint * (^)(CGFloat offsetMultiplier))offsetMultiplier;
+
 /**
  *  Modifies the NSLayoutConstraint constant based on a value type
  */
@@ -196,6 +198,8 @@
  *	Modifies the NSLayoutConstraint constant
  */
 - (void)setOffset:(CGFloat)offset;
+
+- (void)setOffsetMultiplier:(CGFloat)offsetMultiplier;
 
 
 // NSLayoutConstraint Installation support

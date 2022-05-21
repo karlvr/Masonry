@@ -129,6 +129,13 @@
     };
 }
 
+- (MASConstraint * (^)(CGFloat))offsetMultiplier {
+    return ^id(CGFloat offsetMultiplier){
+        self.offsetMultiplier = offsetMultiplier;
+        return self;
+    };
+}
+
 - (MASConstraint * (^)(NSValue *value))valueOffset {
     return ^id(NSValue *offset) {
         NSAssert([offset isKindOfClass:NSValue.class], @"expected an NSValue offset, got: %@", offset);
@@ -288,6 +295,8 @@
 - (void)setCenterOffset:(CGPoint __unused)centerOffset { MASMethodNotImplemented(); }
 
 - (void)setOffset:(CGFloat __unused)offset { MASMethodNotImplemented(); }
+
+- (void)setOffsetMultiplier:(CGFloat __unused)offsetMultiplier { MASMethodNotImplemented(); }
 
 #if TARGET_OS_MAC && !(TARGET_OS_IPHONE || TARGET_OS_TV)
 
