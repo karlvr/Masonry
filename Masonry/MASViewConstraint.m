@@ -340,12 +340,16 @@ static char kInstalledConstraintsKey;
 - (void)activateIn {
     if (self.layoutConstantInSet) {
         self.layoutConstant = self.layoutConstantIn;
+    } else {
+        self.layoutConstant = 0;
     }
 }
 
 - (void)activateOut {
     if (self.layoutConstantOutSet) {
         self.layoutConstant = self.layoutConstantOut;
+    } else {
+        self.layoutConstant = 0;
     }
 }
 
